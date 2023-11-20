@@ -1,7 +1,10 @@
-cmake_minimum_required(VERSION 3.26)
-project(A_star C)
+cmake_minimum_required(VERSION 3.1)
+
+project(P1 C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(A_star
-        src/a_star.c)
+add_subdirectory(src)
+
+enable_testing()
+add_subdirectory(test)
