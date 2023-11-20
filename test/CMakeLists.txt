@@ -1,6 +1,10 @@
 
 # a (series of) tests is by itself a small program
-add_executable(function_tests function_tests.c)
+add_executable(function_tests function_tests.c
+        ../src/valuation/valuation_functions.c
+        ../src/valuation/valuation_functions.h
+        ../src/mapping/mapping_functions.c
+        ../src/mapping/mapping_functions.h)
 # we need to link with the library we are testing
 # target_link_libraries(function_tests functions)
 
