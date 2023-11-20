@@ -3,9 +3,3 @@
 //
 
 #include "mapping_functions.h"
-
-int KDE() {
-
-
-    return (0);
-}
