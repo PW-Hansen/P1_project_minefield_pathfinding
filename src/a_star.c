@@ -57,7 +57,7 @@ tile_t queue[MAP_SIZE * MAP_SIZE]; /* Could probably be much smaller. */
 
 int main() {
     tile_t map[MAP_SIZE][MAP_SIZE];
-
+    //
     /* Setting values manually for now. In the future, this should be either loaded
      * from the command line or through an image of some kind. */
     int x_start = 2, y_start = 2;
