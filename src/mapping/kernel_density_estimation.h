@@ -2,8 +2,8 @@
 // Created by Peter on 20/11/2023.
 //
 
-#ifndef P1_MAPPING_FUNCTIONS_H
-#define P1_MAPPING_FUNCTIONS_H
+#ifndef P1_KERNEL_DENSITY_ESTIMATION_H
+#define P1_KERNEL_DENSITY_ESTIMATION_H
 
 int kerneldensity();
 
@@ -25,4 +25,4 @@ double kde_density (int x_tile, int y_tile, kde_settings_t settings, mine_tuple_
 double kde_k_function(int x_tile, int y_tile, int x_mine, int y_mine, kde_settings_t settings);
 void print_kde_map(kde_settings_t settings, double** kde_map, mine_tuple_t* mine_pos);
 
-#endif //P1_MAPPING_FUNCTIONS_H
+#endif //P1_KERNEL_DENSITY_ESTIMATION_H

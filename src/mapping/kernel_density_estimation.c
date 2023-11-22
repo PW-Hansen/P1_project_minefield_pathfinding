@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "mapping_functions.h"
+#include "kernel_density_estimation.h"
 
 /* Needs to be renamed to something else, as the only main function in the code should be the overall main,
  * in ./main.c. */

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "mapping/mapping_functions.h"
+#include "mapping/kernel_density_estimation.h"
 
 int main() {
 
