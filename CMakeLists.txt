@@ -5,6 +5,7 @@ project(P1 C)
 set(CMAKE_C_STANDARD 11)
 
 add_subdirectory(src)
+add_library(settings INTERFACE settings.h)
 
 # Use CTest to handle if enable_testing() should be used.
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)

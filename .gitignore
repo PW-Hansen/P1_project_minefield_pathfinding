@@ -3,6 +3,7 @@ result
 
 # Clang
 build
+.build
 .cache
 
 # Prerequisites
