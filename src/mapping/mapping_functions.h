@@ -5,6 +5,8 @@
 #ifndef P1_MAPPING_FUNCTIONS_H
 #define P1_MAPPING_FUNCTIONS_H
 
+int kerneldensity();
+
 typedef struct {
     int x_size;
     int y_size;

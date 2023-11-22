@@ -6,7 +6,7 @@
 /* Needs to be renamed to something else, as the only main function in the code should be the overall main,
  * in ./main.c. */
 
-int main() {
+int kerneldensity() {
     // Setting setup.
     kde_settings_t settings = {10, 10, 1, 3};
 
@@ -45,6 +45,12 @@ int kde(kde_settings_t settings, mine_tuple_t* mine_pos) {
         free(kde_map[i]);
     }
     free(kde_map);
+
+
+
+
+
+
 
     return (0);
 }
