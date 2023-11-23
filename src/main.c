@@ -21,10 +21,9 @@ int main() {
     map[4][3] = 1;
     map[4][0] = 1;
 
-    kerneldensity(map, kde_settings);
+    kernel_main(map, kde_settings);
 
     free(map);
-
 
     return (0);
 }

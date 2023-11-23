@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include "kernel_density_estimation.h"
 
-int kerneldensity(int **hotspot_map, kde_settings_t settings) {
+// Placeholder function, the contents of this should be in the mapping main function.
+int kernel_main(int **hotspot_map, kde_settings_t settings) {
     mine_tuple_t *mine_pos = malloc(sizeof(mine_tuple_t) * settings.n);
     int n = 0;
     for (int x = 0; x < settings.x_size; x++) {
@@ -16,45 +17,30 @@ int kerneldensity(int **hotspot_map, kde_settings_t settings) {
         }
     }
 
-    /* Randomly generated mines. Was used for testing previously.
-    for (int i = 0; i < settings.n; i++) {
-        mine_pos[i].x_pos = rand() % settings.x_size; // NOLINT
-        mine_pos[i].y_pos = rand() % settings.y_size; // NOLINT
+    // Creating a 2D array for the value of the KDE kde_map.
+    double **kde_map = malloc(sizeof(double *) * settings.x_size);
+    for (int y = 0; y < settings.y_size; y++) {
+        kde_map[y] = malloc(sizeof(double) * settings.y_size);
     }
-     */
 
-    kde(settings, mine_pos);
+    kde(settings, kde_map, mine_pos);
+
+    kde_map_normalizer(settings, kde_map, mine_pos);
+
+    print_kde_map(settings, kde_map);
 
     // Freeing memory initialized earlier.
     free(mine_pos);
 
-    return (0);
-}
-
-int kde(kde_settings_t settings, mine_tuple_t *mine_pos) {
-    // Creating a 2D array for the value of the KDE kde_map.
-    double **kde_map = malloc(sizeof(double *) * settings.x_size);
-    for (int i = 0; i < settings.y_size; i++) {
-        kde_map[i] = malloc(sizeof(double) * settings.y_size);
-    }
-
-    // Looping over the tiles in the kde_map to determine their kde values.
-    kde_map_loop(settings, kde_map, mine_pos);
-
-    // Printing out the maps.
-    print_kde_map(settings, kde_map);
-    print_hotspots_map(settings, mine_pos);
-
-    // Freeing memory initialized earlier.
-    for (int i = 0; i < settings.y_size; i++) {
-        free(kde_map[i]);
+    for (int y = 0; y < settings.y_size; y++) {
+        free(kde_map[y]);
     }
     free(kde_map);
 
     return (0);
 }
 
-void kde_map_loop(kde_settings_t settings, double **kde_map, mine_tuple_t *mine_pos) {
+void kde(kde_settings_t settings, double **kde_map, mine_tuple_t *mine_pos) {
     for (int x = 0; x < settings.x_size; x++) {
         for (int y = 0; y < settings.y_size; y++) {
             kde_map[x][y] = kde_density(x, y, settings, mine_pos);
@@ -138,9 +124,9 @@ void print_hotspots_map(kde_settings_t settings, mine_tuple_t  *mine_pos) {
     }
 
     printf("Mine map:\n");
-    for (int i = 0; i < settings.x_size; i++) {
-        for (int j = 0; j < settings.y_size; j++) {
-            printf("%d ", map[i][j]);
+    for (int x = 0; x < settings.x_size; x++) {
+        for (int y = 0; y < settings.y_size; y++) {
+            printf("%d ", map[x][y]);
         }
         printf("\n");
     }
