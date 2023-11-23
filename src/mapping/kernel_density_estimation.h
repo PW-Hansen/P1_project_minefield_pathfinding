@@ -10,6 +10,7 @@ typedef struct {
     int y_size;
     int bandwidth;
     int n;
+    int testing;
 } kde_settings_t;
 
 typedef struct {
@@ -24,5 +25,8 @@ double kde_k_function(int x_tile, int y_tile, int x_mine, int y_mine, kde_settin
 void kde_map_normalizer(kde_settings_t settings, double **kde_map, mine_tuple_t *mine_pos);
 void print_kde_map(kde_settings_t settings, double** kde_map);
 void print_hotspots_map(kde_settings_t settings, mine_tuple_t  *mine_pos);
+void kde_output(FILE *fp, kde_settings_t settings, double **kde_map);
+
+void kde_test(FILE *test_file, FILE *compare_file);
 
 #endif //P1_KERNEL_DENSITY_ESTIMATION_H

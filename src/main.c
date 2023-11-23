@@ -4,7 +4,7 @@
 
 int main() {
 
-    kde_settings_t kde_settings = {5, 5, 1, 3};
+    kde_settings_t kde_settings = {5, 5, 1, 3, 1};
 
     int **map = malloc(sizeof(int *) * kde_settings.x_size);
     for (int i = 0; i < kde_settings.y_size; i++) {
