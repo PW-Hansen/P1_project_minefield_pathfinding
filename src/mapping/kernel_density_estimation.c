@@ -86,21 +86,47 @@ double kde_k_function(int x_tile, int y_tile, int x_mine, int y_mine, kde_settin
     return result;
 }
 
+void kde_map_normalizer(kde_settings_t settings, double **kde_map, mine_tuple_t *mine_pos) {
+    double min_hotspot_val = 1e3;
+    double kde_hotspot_val;
+
+    // Figure out the highest kde value.
+    for (int i = 0; i < settings.n; ++i) {
+        kde_hotspot_val = kde_map[mine_pos[i].x_pos][mine_pos[i].y_pos];
+        if (kde_hotspot_val < min_hotspot_val) {
+            min_hotspot_val = kde_hotspot_val;
+        }
+    }
+
+    /* Divide all map tiles by the minimum hotspot value to normalize it, then
+     * make sure that no tiles have a value above 1, as these values are supposed
+     * to represent the probability of a specific tile in the map containing mines.
+     * */
+    for (int x = 0; x < settings.x_size; x++) {
+        for (int y = 0; y < settings.y_size; y++) {
+            kde_map[x][y] /= min_hotspot_val;
+            if (kde_map[x][y] > 1.) {
+                kde_map[x][y] = 1.;
+            }
+        }
+    }
+}
+
 void print_kde_map(kde_settings_t settings, double **kde_map) {
     printf("The map is %d by %d and contains %d mines.\n", settings.x_size, settings.y_size, settings.n);
     printf("KDE map:\n");
-    for (int i = 0; i < settings.x_size; i++) {
-        for (int j = 0; j < settings.y_size; j++) {
-            printf("%3.3lf ", kde_map[i][j]);
+    for (int x = 0; x < settings.x_size; x++) {
+        for (int y = 0; y < settings.y_size; y++) {
+            printf("%3.3lf ", kde_map[x][y]);
         }
         printf("\n");
     }
 }
 void print_hotspots_map(kde_settings_t settings, mine_tuple_t  *mine_pos) {
     int map[settings.x_size][settings.y_size];
-    for (int i = 0; i < settings.x_size; i++) {
-        for (int j = 0; j < settings.y_size; j++) {
-            map[i][j] = 0;
+    for (int x = 0; x < settings.x_size; x++) {
+        for (int y = 0; y < settings.y_size; y++) {
+            map[x][y] = 0;
         }
     }
 
