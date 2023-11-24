@@ -1,89 +1,108 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "read_print_terrain_map.h"
 
 #define MAX_WIDTH 1000
 #define MAX_HEIGHT 1000
 
-//we create the struct of "pixel"
-typedef struct {
-    unsigned char red, green, blue;
-} Pixel;
-
-int pixel_equal(Pixel p1, Pixel p2) {
+int pixel_eq(pixel_t p1, pixel_t p2) {
     return p1.red == p2.red && p1.green == p2.green && p1.blue == p2.blue;
 }
 
-enum cell_types {invalid = -1, road, field, forest, hills, river};
-
-enum cell_types get_type_of_pixel(Pixel p) {
-    Pixel color_types[] = {{120, 120, 120},
+enum cell_types get_type_of_pixel(pixel_t p) {
+    pixel_t color_types[] = {{120, 120, 120},
                            {210, 230, 130},
                            {50, 100, 60},
                            {170, 140, 70},
                            {50, 70, 100}};
     for (int i = 0; i < 5; i++) {
-        if (pixel_equal(p, color_types[i])) {
+        if (pixel_eq(p, color_types[i])) {
             return (enum cell_types)i;
         }
     }
-    return invalid;
+    return CELL_INVALID;
 }
 
-int main() {
-    // open the map-file in bit read mode
-    FILE *file = fopen("C:\\Users\\matia\\CLionProjects\\project_map\\testmap.ppm", "rb");
-    if (file == NULL) {
-        printf("Error opening file.\n");
-        return 1;
-    }
+map_t map_from_ppm(const char* file_path) {
+  FILE* file = fopen(file_path, "rb");
 
-    // Read and skip the P6 header
-    char header[3];
-    fgets(header, sizeof(header), file);
+  if (file == NULL) {
+    perror("read_map_from_ppm");
+    exit(EXIT_FAILURE);
+  }
 
-    // we check if the header is the right type of P6
-    if (header[0] != 'P' || header[1] != '6') {
-        printf("Invalid PPM file format.\n");
-        fclose(file);
-        return 1;
-    }
+  char header[3];
+  fgets(header, sizeof(header), file);
 
-    // read the width, height, and maximum color value
-    int width, height, maxColor;
-    fscanf(file, "%d %d %d", &width, &height, &maxColor);
-
-    // check if the color is 8 bit and image is proper size
-    if (width >= MAX_WIDTH && height >= MAX_HEIGHT && maxColor != 255) {
-        printf("Unsupported size or color depth.\n");
-        fclose(file);
-        return 1;
-    }
-
-    // skip the newline character after the header
-    fgetc(file);
-
-    // read pixel values into a 2D array
-    Pixel terrain_map[height][width];
-    fread(terrain_map, sizeof(Pixel), width * height, file);
-
-    // close the file
+  // TODO: Support more than just the P6 PPM.
+  if (header[0] != 'P' || header[1] != '6') {
+    fprintf(stderr, "File does not have the correct magic bytes.\n");
     fclose(file);
+    exit(EXIT_FAILURE);
+  }
 
-    // process the terrain_map array based on the color information
-    int result_array[width][height];
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            result_array[i][j] = get_type_of_pixel(terrain_map[i][j]);
-        }
+  // P6: read the width, height, and maximum color value
+  int width, height, max_color;
+  fscanf(file, "%d %d %d", &width, &height, &max_color);
+
+  // check if the color is 8 bit and image is proper size
+  if (width >= MAX_WIDTH && height >= MAX_HEIGHT && max_color != 255) {
+    fprintf(stderr, "Unsupported size or color depth.\n");
+    fclose(file);
+    exit(EXIT_FAILURE);
+  }
+
+  // skip the newline character after the header
+  if (fgetc(file) != '\n') {
+    fprintf(stderr, "Expected newline was not in fact a new line char.\n");
+    fclose(file);
+    exit(EXIT_FAILURE);
+  };
+
+  map_t terrain_map;
+  terrain_map.width = width;
+  terrain_map.height = height;
+  terrain_map.data = (int**) calloc(width, sizeof(int*));
+
+  if (terrain_map.data == NULL) {
+    fprintf(stderr, "Memory allocation failed\n");
+    fclose(file);
+    exit(EXIT_FAILURE);
+  }
+
+  pixel_t temp;
+  for (int i = 0; i < width; i++) {
+    terrain_map.data[i] = (int*) calloc(height, sizeof(int));
+    if (terrain_map.data[i] == NULL) {
+      fprintf(stderr, "Memory allocation failed\n");
+      fclose(file);
+      for (int g = 0; g < i; g++)
+        free(terrain_map.data[g]);
+      free(terrain_map.data);
+      exit(EXIT_FAILURE);
     }
-
-    // print the result_array
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            printf("%2d ", result_array[i][j]);
-        }
-        printf("\n");
+    for (int j = 0; j < height; j++) {
+      fread(&temp, sizeof(pixel_t), 1, file);
+      terrain_map.data[i][j] = get_type_of_pixel(temp);
     }
+  }
 
-    return 0;
+  fclose(file);
+  return terrain_map;
+}
+
+// TODO: Move this out.
+int main() {
+  char file_path[1024];
+  printf("Enter file path: ");
+  scanf(" %s", file_path);
+
+  map_t terrain_map = map_from_ppm(file_path);
+
+  for (int i = 0; i < terrain_map.width; i++) {
+    for (int j = 0; j < terrain_map.height; j++) {
+      printf("%1d", terrain_map.data[i][j]);
+    }
+    printf("\n");
+  }
 }
