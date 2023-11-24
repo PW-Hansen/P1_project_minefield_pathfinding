@@ -5,10 +5,8 @@ add_executable(main main.c
         valuation/valuation_functions.h
         mapping/mapping_functions.c
         mapping/mapping_functions.h
-
+        combiner/combiner.c
+        combiner/combiner.h
 )
-
-add_subdirectory(combiner)
-target_link_libraries(main combiner)
 
 install(TARGETS a_star)
