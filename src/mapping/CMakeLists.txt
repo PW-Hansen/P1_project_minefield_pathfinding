@@ -1,4 +1,4 @@
-add_executable(read_print_terrain_map mapping/read_print_terrain_map.c)
-target_include_directories(read_print_terrain_map PUBLIC mapping)
+add_executable(read_print_terrain_map read_print_terrain_map.c)
+target_include_directories(read_print_terrain_map PUBLIC .)
 
 install(TARGETS read_print_terrain_map)
