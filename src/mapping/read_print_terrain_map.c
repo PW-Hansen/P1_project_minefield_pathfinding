@@ -38,7 +38,7 @@ map_t map_from_ppm(const char* file_path) {
   }
 
   char header[3];
-  fgets(header, sizeof(header), file);
+  (void) fgets(header, sizeof(header), file);
 
   // TODO: Support more than just the P6 PPM.
   if (header[0] != 'P' || header[1] != '6') {
@@ -49,7 +49,7 @@ map_t map_from_ppm(const char* file_path) {
 
   // P6: read the width, height, and maximum color value
   int width, height, max_color;
-  fscanf(file, "%d %d %d", &width, &height, &max_color);
+  (void) fscanf(file, "%d %d %d", &width, &height, &max_color);
 
   // check if the color is 8 bit and image is proper size
   if (width >= MAX_WIDTH && height >= MAX_HEIGHT && max_color != 255) {
@@ -88,7 +88,7 @@ map_t map_from_ppm(const char* file_path) {
       exit(EXIT_FAILURE);
     }
     for (int j = 0; j < height; j++) {
-      fread(&temp, sizeof(pixel_t), 1, file);
+      (void) fread(&temp, sizeof(pixel_t), 1, file);
       terrain_map.data[i][j] = get_type_of_pixel(temp);
     }
   }
@@ -101,7 +101,7 @@ map_t map_from_ppm(const char* file_path) {
 int main() {
   char file_path[1024];
   printf("Enter file path: ");
-  scanf(" %s", file_path);
+  (void) scanf(" %s", file_path);
 
   map_t terrain_map = map_from_ppm(file_path);
 
