@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(P1 C)
+project(p1-minefield-pathfinding C)
 
 set(CMAKE_C_STANDARD 11)
 
