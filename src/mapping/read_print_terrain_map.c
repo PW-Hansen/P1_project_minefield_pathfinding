@@ -23,6 +23,12 @@ enum cell_types get_type_of_pixel(pixel_t p) {
     return CELL_INVALID;
 }
 
+void free_map(map_t map) {
+  for (int i = 0; i < map.width; i++)
+    free(map.data[i]);
+  free(map.data);
+}
+
 map_t map_from_ppm(const char* file_path) {
   FILE* file = fopen(file_path, "rb");
 
@@ -105,4 +111,6 @@ int main() {
     }
     printf("\n");
   }
+
+  free_map(terrain_map);
 }
