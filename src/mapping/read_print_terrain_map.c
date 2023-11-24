@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "read_print_terrain_map.h"
 
 #define MAX_WIDTH 1000
 #define MAX_HEIGHT 1000
@@ -10,22 +9,29 @@ typedef struct {
     unsigned char red, green, blue;
 } Pixel;
 
-void print_result_array() {
+int pixel_equal(Pixel p1, Pixel p2) {
+    return p1.red == p2.red && p1.green == p2.green && p1.blue == p2.blue;
+}
 
-};
+enum cell_types {invalid = -1, road, field, forest, hills, river};
 
-int read_print_terrainmap() {
-    // Open a file for writing
-    FILE *outputFile = freopen("output.txt", "w", stdout);
-
-    // Check if the file was opened successfully
-    if (outputFile == NULL) {
-        printf("Error opening output file.\n");
-        return 1;
+enum cell_types get_type_of_pixel(Pixel p) {
+    Pixel color_types[] = {{120, 120, 120},
+                           {210, 230, 130},
+                           {50, 100, 60},
+                           {170, 140, 70},
+                           {50, 70, 100}};
+    for (int i = 0; i < 5; i++) {
+        if (pixel_equal(p, color_types[i])) {
+            return (enum cell_types)i;
+        }
     }
+    return invalid;
+}
 
-    //open the map-file in bit read mode
-    FILE *file = fopen("testmap.ppm", "rb");
+int main() {
+    // open the map-file in bit read mode
+    FILE *file = fopen("C:\\Users\\matia\\CLionProjects\\project_map\\testmap.ppm", "rb");
     if (file == NULL) {
         printf("Error opening file.\n");
         return 1;
@@ -46,8 +52,8 @@ int read_print_terrainmap() {
     int width, height, maxColor;
     fscanf(file, "%d %d %d", &width, &height, &maxColor);
 
-    // check if the color is 8 bit
-    if (width >= MAX_WIDTH && height>= MAX_HEIGHT && maxColor != 255) {
+    // check if the color is 8 bit and image is proper size
+    if (width >= MAX_WIDTH && height >= MAX_HEIGHT && maxColor != 255) {
         printf("Unsupported size or color depth.\n");
         fclose(file);
         return 1;
@@ -57,39 +63,27 @@ int read_print_terrainmap() {
     fgetc(file);
 
     // read pixel values into a 2D array
-    Pixel terrainMap[height][width];
-    fread(terrainMap, sizeof(Pixel), width * height, file);
+    Pixel terrain_map[height][width];
+    fread(terrain_map, sizeof(Pixel), width * height, file);
 
     // close the file
     fclose(file);
 
-    // process the terrainMap array based on the color information
-    int resultArray[width][height];
+    // process the terrain_map array based on the color information
+    int result_array[width][height];
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
-            if (terrainMap[i][j].red == 120 && terrainMap[i][j].green == 120 && terrainMap[i][j].blue == 120) {
-                resultArray[i][j] = 1;
-            } else if (terrainMap[i][j].red == 210 && terrainMap[i][j].green == 230 && terrainMap[i][j].blue == 130) {
-                resultArray[i][j] = 2;
-            } else if (terrainMap[i][j].red == 50 && terrainMap[i][j].green == 100 && terrainMap[i][j].blue == 60) {
-                resultArray[i][j] = 3;
-            } else if (terrainMap[i][j].red == 170 && terrainMap[i][j].green == 140 && terrainMap[i][j].blue == 70) {
-                resultArray[i][j] = 4;
-            } else if (terrainMap[i][j].red == 50 && terrainMap[i][j].green == 70 && terrainMap[i][j].blue == 100) {
-                resultArray[i][j] = 5;
-            }
+            result_array[i][j] = get_type_of_pixel(terrain_map[i][j]);
         }
     }
 
-    // print the resultArray
+    // print the result_array
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
-            printf("%2d ", resultArray[i][j]);
+            printf("%2d ", result_array[i][j]);
         }
         printf("\n");
     }
-    // close the output file
-    fclose(outputFile);
 
     return 0;
 }
