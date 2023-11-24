@@ -1,4 +1,2 @@
-add_executable(read_print_terrain_map read_print_terrain_map.c)
-target_include_directories(read_print_terrain_map PUBLIC .)
-
-install(TARGETS read_print_terrain_map)
+add_library(terrain_map STATIC terrain_map.c)
+target_include_directories(terrain_map PUBLIC .)

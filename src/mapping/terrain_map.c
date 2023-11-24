@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "read_print_terrain_map.h"
+#include "terrain_map.h"
 
 #define MAX_WIDTH 1000
 #define MAX_HEIGHT 1000
@@ -95,25 +95,4 @@ map_t map_from_ppm(const char* file_path) {
 
   fclose(file);
   return terrain_map;
-}
-
-// TODO: Move this out.
-int main() {
-  char file_path[1024];
-  printf("Enter file path: ");
-  (void) scanf(" %s", file_path);
-
-  map_t terrain_map = map_from_ppm(file_path);
-
-  for (int i = 0; i < terrain_map.width; i++) {
-    for (int j = 0; j < terrain_map.height; j++) {
-      printf("%1d", terrain_map.data[i][j]);
-    }
-    printf("\n");
-  }
-
-  free_map(terrain_map);
-  printf("Thank you for using our software :)\n");
-
-  return 0;
 }
