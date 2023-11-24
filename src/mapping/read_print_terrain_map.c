@@ -113,4 +113,7 @@ int main() {
   }
 
   free_map(terrain_map);
+  printf("Thank you for using our software :)\n");
+
+  return 0;
 }
