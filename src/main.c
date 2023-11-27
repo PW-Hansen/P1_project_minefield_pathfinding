@@ -5,6 +5,7 @@
 
 int main() {
     char file_path[1024];
+    char file_path_hotspots[1024];
     printf("Enter file path: ");
     (void) scanf(" %s", file_path);
     map_t terrain_map = map_from_ppm(file_path);
@@ -19,26 +20,28 @@ int main() {
     free_map(terrain_map);
     printf("Thank you for using our software :)\n");
 
-    kde_settings_t kde_settings = {5, 5, 1, 3, 1};
+    // Initializing an array for the hotspots. Length is set at the max possible value.
+    mine_tuple_t hotspot_pos[terrain_map.width * terrain_map.height];
+    int hotspot_num;
 
-    int **map = malloc(sizeof(int *) * kde_settings.x_size);
-    for (int i = 0; i < kde_settings.y_size; i++) {
-        map[i] = malloc(sizeof(int) * kde_settings.y_size);
+    printf("Enter file path: ");
+    (void) scanf(" %s", file_path_hotspots);
+    hotspot_num = hotspot_pos_from_ppm(file_path_hotspots, hotspot_pos);
+
+    kde_settings_t kde_settings = {terrain_map.width, terrain_map.height, 1, hotspot_num, 1};
+
+    // Creating a 2D array for the value of the KDE values.
+    double **kde_map = malloc(sizeof(double *) * kde_settings.x_size);
+    for (int y = 0; y < kde_settings.y_size; y++) {
+        kde_map[y] = malloc(sizeof(double) * kde_settings.y_size);
     }
+    kde_main(kde_map, kde_settings, hotspot_pos);
 
-    for (int x = 0; x < kde_settings.x_size; x++) {
-        for (int y = 0; y < kde_settings.y_size; y++) {
-            map[x][y] = 0;
-        }
+    // Frees the memory used for the map of the KDE values.
+    for (int y = 0; y < kde_settings.y_size; y++) {
+        free(kde_map[y]);
     }
-
-    map[1][3] = 1;
-    map[4][3] = 1;
-    map[4][0] = 1;
-
-    kernel_main(map, kde_settings);
-
-    free(map);
+    free(kde_map);
 
     return 0;
 }
