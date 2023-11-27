@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "mapping/kernel_density_estimation.h"
+#include "kernel_density_estimation.h"
 #include "terrain_map.h"
 
 int main() {
