@@ -10,11 +10,17 @@ int pixel_eq(pixel_t p1, pixel_t p2) {
 }
 
 enum cell_types get_type_of_pixel(pixel_t p) {
-    pixel_t color_types[] = {{120, 120, 120},
-                           {210, 230, 130},
-                           {50, 100, 60},
-                           {170, 140, 70},
-                           {50, 70, 100}};
+    pixel_t color_types[] = {
+            //grey
+            {120, 120, 120},
+            //sand
+            {210, 230, 130},
+            //dark green
+            {50, 100, 60},
+            //light brown
+            {170, 140, 70},
+            //dark blue
+            {50, 70, 100}};
     for (int i = 0; i < 5; i++) {
         if (pixel_eq(p, color_types[i])) {
             return (enum cell_types)i;
