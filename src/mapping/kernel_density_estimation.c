@@ -127,7 +127,8 @@ void print_kde_map(kde_settings_t settings, double **kde_map) {
         printf("\n");
     }
 }
-void print_hotspots_map(kde_settings_t settings, mine_tuple_t  *mine_pos) {
+
+void print_hotspots_map(kde_settings_t settings, mine_tuple_t *mine_pos) {
     int map[settings.x_size][settings.y_size];
     for (int x = 0; x < settings.x_size; x++) {
         for (int y = 0; y < settings.y_size; y++) {
