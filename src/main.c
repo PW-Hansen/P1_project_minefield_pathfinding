@@ -21,7 +21,7 @@ int main() {
     printf("Thank you for using our software :)\n");
 
     // Initializing an array for the hotspots. Length is set at the max possible value.
-    mine_tuple_t hotspot_pos[terrain_map.width * terrain_map.height];
+    hotspot_tuple_t hotspot_pos[terrain_map.width * terrain_map.height];
     int hotspot_num;
 
     printf("Enter file path: ");

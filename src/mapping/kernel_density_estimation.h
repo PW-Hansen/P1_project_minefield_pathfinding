@@ -16,19 +16,19 @@ typedef struct {
 typedef struct {
     int x_pos;
     int y_pos;
-} mine_tuple_t;
+} hotspot_tuple_t;
 
-int kde_main(double **kde_map, kde_settings_t settings, mine_tuple_t *hotspot_pos);
+int kde_main(double **kde_map, kde_settings_t settings, hotspot_tuple_t *hotspot_pos);
 
-double kde_density(int x_tile, int y_tile, kde_settings_t settings, mine_tuple_t *mine_pos);
+double kde_density(int x_tile, int y_tile, kde_settings_t settings, hotspot_tuple_t *hotspot_pos);
 
-double kde_k_function(int x_tile, int y_tile, int x_mine, int y_mine, kde_settings_t settings);
+double kde_k_function(int x_tile, int y_tile, int x_hotspot, int y_hotspot, kde_settings_t settings);
 
-void kde_map_normalizer(kde_settings_t settings, double **kde_map, mine_tuple_t *mine_pos);
+void kde_map_normalizer(kde_settings_t settings, double **kde_map, hotspot_tuple_t *hotspot_pos);
 
 void print_kde_map(kde_settings_t settings, double **kde_map);
 
-void print_hotspots_map(kde_settings_t settings, mine_tuple_t *mine_pos);
+void print_hotspots_map(kde_settings_t settings, hotspot_tuple_t *hotspot_pos);
 
 void kde_output(FILE *fp, kde_settings_t settings, double **kde_map);
 

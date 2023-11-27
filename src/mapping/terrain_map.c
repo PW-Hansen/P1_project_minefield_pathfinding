@@ -104,7 +104,7 @@ map_t map_from_ppm(const char *file_path) {
     return terrain_map;
 }
 
-int hotspot_pos_from_ppm(const char *file_path, mine_tuple_t* hotspot_pos) {
+int hotspot_pos_from_ppm(const char *file_path, hotspot_tuple_t* hotspot_pos) {
     int hotspot_num = 0;
 
     FILE *file = fopen(file_path, "rb");
