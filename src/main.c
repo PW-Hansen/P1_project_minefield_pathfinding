@@ -28,7 +28,7 @@ int main() {
     (void) scanf(" %s", file_path_hotspots);
     hotspot_num = hotspot_pos_from_ppm(file_path_hotspots, hotspot_pos);
 
-    kde_settings_t kde_settings = {terrain_map.width, terrain_map.height, 1, hotspot_num, 1};
+    kde_settings_t kde_settings = {terrain_map.width, terrain_map.height, 1, hotspot_num, 0};
 
     // Creating a 2D array for the value of the KDE values.
     double **kde_map = malloc(sizeof(double *) * kde_settings.x_size);
