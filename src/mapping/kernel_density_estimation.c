@@ -3,9 +3,16 @@
 #include <stdlib.h>
 #include "kernel_density_estimation.h"
 
-// Placeholder function, the contents of this should be in the mapping main function.
+/**
+ * Function to populate a supplied map with kernel density estimates when supplied
+ * with a list of hotspots and settings.
+ * @param kde_map the destination where the kernel density estimated are saved to.
+ * @param settings settings, containing information such as the size, the bandwidth
+ * used for calculating the kernel density, and the number of hotspots.
+ * @param hotspot_pos positions in the map where there's a mine hotspot.
+ * @return 0, to verify that the function ran correctly.
+ */
 int kde_main(double **kde_map, kde_settings_t settings, hotspot_tuple_t *hotspot_pos) {
-
     for (int x = 0; x < settings.x_size; x++) {
         for (int y = 0; y < settings.y_size; y++) {
             kde_map[x][y] = kde_density(x, y, settings, hotspot_pos);
@@ -16,7 +23,7 @@ int kde_main(double **kde_map, kde_settings_t settings, hotspot_tuple_t *hotspot
 
     // print_kde_map(settings, kde_map);
 
-    // If testing is enabled, write out the KDE map to a file.
+    // If testing is enabled, write out the KDE map to a file, then compare it to pre-computed test file.
     if (settings.testing == 1) {
         FILE *fp = fopen("test/test_files/output.txt", "w");
         if (fp == NULL) {
@@ -38,6 +45,15 @@ int kde_main(double **kde_map, kde_settings_t settings, hotspot_tuple_t *hotspot
     return (0);
 }
 
+/**
+ * Calculates the kernel density estimate for a tile in the map, based on the positions of all
+ * suspected hotspots.
+ * @param x_tile
+ * @param y_tile
+ * @param settings
+ * @param hotspot_pos
+ * @return
+ */
 double kde_density(int x_tile, int y_tile, kde_settings_t settings, hotspot_tuple_t *hotspot_pos) {
     double val = 0;
     int x_hotspot, y_hotspot;
@@ -49,11 +65,21 @@ double kde_density(int x_tile, int y_tile, kde_settings_t settings, hotspot_tupl
         val += kde_k_function(x_tile, y_tile, x_hotspot, y_hotspot, settings);
     }
 
+    // Part of the formula we use to compute KDE.
     val /= (settings.n * settings.bandwidth);
 
     return val;
 }
 
+/**
+ * Calculates the KDE contribution from a specified mine hotspot to a specified map tile.
+ * @param x_tile
+ * @param y_tile
+ * @param x_hotspot
+ * @param y_hotspot
+ * @param settings
+ * @return
+ */
 double kde_k_function(int x_tile, int y_tile, int x_hotspot, int y_hotspot, kde_settings_t settings) {
     double distance = sqrt(pow(x_tile - x_hotspot, 2) + pow(y_tile - y_hotspot, 2));
     double geometric_factor = 1.0 / (sqrt(2.0 * M_PI));
@@ -62,6 +88,14 @@ double kde_k_function(int x_tile, int y_tile, int x_hotspot, int y_hotspot, kde_
     return result;
 }
 
+/**
+ * Function to normalize the estimates so that all hotspots will have a value of 1. The function
+ * finds the hotspot position with the lowest value in the KDE map, then divides all entries in
+ * the map by this value, and finally ensures that no value in the KDE map is greater than 1.
+ * @param settings
+ * @param kde_map
+ * @param hotspot_pos
+ */
 void kde_map_normalizer(kde_settings_t settings, double **kde_map, hotspot_tuple_t *hotspot_pos) {
     double min_hotspot_val = 1e3;
     double kde_hotspot_val;
@@ -123,6 +157,12 @@ void print_hotspots_map(kde_settings_t settings, hotspot_tuple_t *hotspot_pos) {
     }
 }
 
+/**
+ * Prints the KDE map to a specified file path.
+ * @param fp
+ * @param settings
+ * @param kde_map
+ */
 void kde_output(FILE *fp, kde_settings_t settings, double **kde_map) {
     for (int x = 0; x < settings.x_size; x++) {
         for (int y = 0; y < settings.y_size; y++) {
@@ -132,6 +172,12 @@ void kde_output(FILE *fp, kde_settings_t settings, double **kde_map) {
     }
 }
 
+/**
+ * Test to check whether two files are identical. Used to verify the output of the KDE function
+ * against a precomputed result for a specific setting.
+ * @param test_file
+ * @param compare_file
+ */
 void kde_test(FILE *test_file, FILE *compare_file) {
     int test_c, comp_c;
 
