@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "kernel_density_estimation.h"
 #include "terrain_map.h"
+#include "combiner.h"
+
 
 int main() {
     char file_path[1024];
@@ -17,8 +19,7 @@ int main() {
         printf("\n");
     }
 
-    free_map(terrain_map);
-    printf("Thank you for using our software :)\n");
+
 
     // Initializing an array for the hotspots. Length is set at the max possible value.
     hotspot_tuple_t hotspot_pos[terrain_map.width * terrain_map.height];
@@ -37,11 +38,21 @@ int main() {
     }
     kde_main(kde_map, kde_settings, hotspot_pos);
 
+
+    combine_arrays(terrain_map,kde_map);
+
+
     // Frees the memory used for the map of the KDE values.
     for (int y = 0; y < kde_settings.y_size; y++) {
         free(kde_map[y]);
     }
     free(kde_map);
+
+    free_map(terrain_map);
+    printf("Thank you for using our software :)\n");
+
+
+
 
     return 0;
 }
