@@ -1,3 +1,4 @@
+add_subdirectory(combiner)
 add_subdirectory(mapping)
 add_subdirectory(pathfinding)
 
