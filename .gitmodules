@@ -1,0 +1,3 @@
+[submodule "extern/mtest"]
+	path = extern/mtest
+	url = https://github.com/MortenSchou/mtest.git
