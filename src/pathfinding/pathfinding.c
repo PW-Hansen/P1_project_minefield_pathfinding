@@ -1,10 +1,11 @@
 #include "pathfinding.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
 #define DIAG_MULT sqrt(2)
 
-void pathfinding_main(double **cost_map, int x_size, int y_size, int x_target, int y_target, int x_start, int y_start) {
+double pathfinding_main(double **cost_map, int x_size, int y_size, int x_target, int y_target, int x_start, int y_start) {
     // Creating a 2D array for the value of the KDE values.
     // TODO, need to verify that memory has been allocated.
     tile_t **pathfinding_map = malloc(sizeof(tile_t *) * x_size);
@@ -92,9 +93,14 @@ void pathfinding_main(double **cost_map, int x_size, int y_size, int x_target, i
 
     tile_t target_tile = *queue_head.tile_p;
 
+    double total_cost = target_tile.g_score;
+    printf("Total cost: %lf", total_cost);
+
     // Freeing allocated memory.
     free_queue(&queue_head);
     free_map(pathfinding_map, y_size);
+
+    return total_cost;
 }
 
 void initialize_map(tile_t **pathfinding_map, double **cost_map, pathfinding_settings_t settings) {
