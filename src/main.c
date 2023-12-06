@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "combiner.h"
 #include "kernel_density_estimation.h"
 #include "terrain_map.h"
-#include "combiner.h"
 
 
 int main() {
@@ -39,7 +39,7 @@ int main() {
     kde_main(kde_map, kde_settings, hotspot_pos);
 
 
-    combine_arrays(terrain_map,kde_map);
+    combine_arrays(terrain_map.data,kde_map);
 
 
     // Frees the memory used for the map of the KDE values.
