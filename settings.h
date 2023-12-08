@@ -9,9 +9,11 @@ const TileConf tile_conf = {
 // --- Landmine ---
 typedef struct {
     int cost;
+    int bandwidth;
 } LandmineConf;
 const LandmineConf landmine_conf = {
     .cost = 69,
+    .bandwidth = 1,
 };
 
 // --- Terrain ---
