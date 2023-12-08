@@ -93,6 +93,15 @@ double pathfinding_main(double **cost_map, int x_size, int y_size, int x_target,
 
     tile_t target_tile = *queue_head.tile_p;
 
+    tile_t tile = target_tile;
+    tile_t* source_p = tile.source_p;
+
+    while ( source_p != NULL ) {
+        printf("%d, %d", source_p->x, source_p->y);
+        tile = *source_p;
+        source_p = tile.source_p;
+    }
+
     double total_cost = target_tile.g_score;
     printf("Total cost: %lf", total_cost);
 
