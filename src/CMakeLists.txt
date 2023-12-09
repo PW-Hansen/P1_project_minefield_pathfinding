@@ -1,13 +1,9 @@
-add_executable(a_star pathfinding/a_star.c)
+add_subdirectory(mapping)
+add_subdirectory(pathfinding)
 
 add_library(settings INTERFACE settings.h)
 
-add_executable(
-        main main.c
-        valuation/valuation_functions.c
-        valuation/valuation_functions.h
-        mapping/mapping_functions.c
-        mapping/mapping_functions.h
-)
+add_executable(main main.c)
+target_link_libraries(main terrain_map kernel_density_estimation settings)
 
-install(TARGETS a_star)
+install(TARGETS main)

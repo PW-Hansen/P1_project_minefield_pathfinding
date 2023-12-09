@@ -6,8 +6,9 @@
     utils,
     ...
   }:
-    utils.lib.eachSystem utils.lib.allSystems (system: {
-      packages.default = nixpkgs.legacyPackages.${system}.callPackage ({
+    utils.lib.eachSystem utils.lib.allSystems (system: rec {
+      packages.default = packages.p1-minefield-pathfinding;
+      packages.p1-minefield-pathfinding = nixpkgs.legacyPackages.${system}.callPackage ({
         clangStdenv,
         cmake,
         fetchFromGitHub,
@@ -22,7 +23,7 @@
         };
       in
         clangStdenv.mkDerivation {
-          name = "default";
+          name = "p1-minefield-pathfinding";
           src = ./.;
           nativeBuildInputs = [cmake];
           preConfigure = ''
