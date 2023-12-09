@@ -7,8 +7,9 @@
 #include "settings.h"
 
 int main() {
-    printf("Tile base cost: %d\n", config.tile.cost);
-    printf("Field tile cost: %d\n", config.terrain.field_cost);
+    // Sanity test Settings:
+    printf("Tile base cost: %d\n", SETTINGS_TILE_COST);
+    printf("Field tile cost: %d\n", SETTINGS_TERRAIN_FIELD_COST);
 
     char file_path[1024];
     char file_path_hotspots[1024];
