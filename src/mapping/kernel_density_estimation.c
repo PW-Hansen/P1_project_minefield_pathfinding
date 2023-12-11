@@ -21,7 +21,7 @@ int kde_main(double **kde_map, kde_settings_t settings, hotspot_tuple_t *hotspot
 
     kde_map_normalizer(settings, kde_map, hotspot_pos);
 
-    // print_kde_map(settings, kde_map);
+    print_kde_map(settings, kde_map);
 
     // If testing is enabled, write out the KDE map to a file, then compare it to pre-computed test file.
     if (settings.testing == 1) {
@@ -127,7 +127,7 @@ void print_kde_map(kde_settings_t settings, double **kde_map) {
     printf("KDE map:\n");
     for (int x = 0; x < settings.x_size; x++) {
         for (int y = 0; y < settings.y_size; y++) {
-            printf("%3.3lf ", kde_map[x][y]);
+            printf("%1.0lf", kde_map[x][y]);
         }
         printf("\n");
     }
@@ -166,7 +166,7 @@ void print_hotspots_map(kde_settings_t settings, hotspot_tuple_t *hotspot_pos) {
 void kde_output(FILE *fp, kde_settings_t settings, double **kde_map) {
     for (int x = 0; x < settings.x_size; x++) {
         for (int y = 0; y < settings.y_size; y++) {
-            fprintf(fp, "%lf ", kde_map[x][y]);
+            fprintf(fp, "%.0lf ", kde_map[x][y]);
         }
         fprintf(fp, "\n");
     }

@@ -5,7 +5,7 @@
 
 // Temp placeholder variables till merged with settings-feature
 int base_cost = 5;
-int mine_cost = 69;
+int mine_cost = 10;
 int size = 64;
 
 void combine_arrays(int **terrain_layout, double **kde_layout) {
@@ -30,7 +30,7 @@ void combine_arrays(int **terrain_layout, double **kde_layout) {
             }
 
             cost_map[x][y] = terrain_cost + base_cost + (mine_cost * kde_layout[x][y]);
-            printf("%0.3lf, ", cost_map[x][y]);
+            printf("%0.1lf, ", cost_map[x][y]);
         }
         printf("\n");
     }
