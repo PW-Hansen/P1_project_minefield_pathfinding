@@ -1,3 +1,7 @@
+cmake_minimum_required(VERSION 3.12)
+
+project(P1_project)
+
 add_subdirectory(combiner)
 add_subdirectory(mapping)
 add_subdirectory(pathfinding)
