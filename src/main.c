@@ -1,9 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <stdlib.h>
+#include "combiner.h"
 #include "kernel_density_estimation.h"
 #include "terrain_map.h"
+#include "settings.h"
+
 
 int main() {
+    // Sanity test Settings:
+    printf("Tile base cost: %d\n", SETTINGS_TILE_COST);
+    printf("Field tile cost: %d\n", SETTINGS_TERRAIN_FIELD_COST);
+
     char file_path[1024];
     char file_path_hotspots[1024];
     printf("Enter file path: ");
@@ -16,9 +25,6 @@ int main() {
         }
         printf("\n");
     }
-
-    free_map(terrain_map);
-    printf("Thank you for using our software :)\n");
 
     // Initializing an array for the hotspots. Length is set at the max possible value.
     hotspot_tuple_t hotspot_pos[terrain_map.width * terrain_map.height];
@@ -37,11 +43,16 @@ int main() {
     }
     kde_main(kde_map, kde_settings, hotspot_pos);
 
+    combine_arrays(terrain_map.data,kde_map);
+
     // Frees the memory used for the map of the KDE values.
     for (int y = 0; y < kde_settings.y_size; y++) {
         free(kde_map[y]);
     }
     free(kde_map);
 
-    return 0;
+    free_map(terrain_map);
+    printf("Thank you for using our software :)\n");
+
+    return EXIT_SUCCESS;
 }
