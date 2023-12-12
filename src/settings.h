@@ -5,6 +5,12 @@
 #define SETTINGS_LANDMINE_COST 69
 #define SETTINGS_LANDMINE_BANDWIDTH 1
 
+// Start and target tile
+#define START_X 20
+#define START_Y 5
+#define TARGET_X 27
+#define TARGET_Y 50
+
 // Terrain
 #define SETTINGS_TERRAIN_HILL_COST 5
 #define SETTINGS_TERRAIN_ROAD_COST 1

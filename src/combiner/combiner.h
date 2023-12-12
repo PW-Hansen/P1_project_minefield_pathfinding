@@ -6,4 +6,4 @@ typedef enum {
     FOREST = 5,
 } TileType;
 
-void combine_arrays(int **terrain_layout, double **kde_layout);
+void combine_arrays(int **terrain_layout, double **kde_layout, double **cost_map);

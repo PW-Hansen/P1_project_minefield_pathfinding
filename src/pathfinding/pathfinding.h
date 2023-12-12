@@ -26,18 +26,22 @@ typedef struct {
     int y_target;
 } pathfinding_settings_t;
 
+double pathfinding_main(double **cost_map, int x_size, int y_size, int x_target, int y_target, int x_start, int y_start);
+
 void initialize_map(tile_t **pathfinding_map, double **cost_map, pathfinding_settings_t settings);
 
-void update_f_g_scores(tile_t tile, double new_g_score);
+void update_f_g_scores(tile_t *tile, double new_g_score);
 
 void free_queue(queue_item_t *head);
 
-void free_map(tile_t **pathfinding_map, int y_size);
+void free_map_pathfinding(tile_t **pathfinding_map, int y_size);
 
-int populate_neighbors(tile_t current_tile, tile_t *neighbors, tile_t **pathfinding_map, pathfinding_settings_t settings);
+int populate_neighbors(tile_t current_tile, tile_t **neighbors, tile_t **pathfinding_map, pathfinding_settings_t settings);
 
-void insert_queue_element(tile_t neighbor, queue_item_t queue_head);
+int insert_queue_element(tile_t *tile, queue_item_t queue_head);
 
-void insert_existing_queue_element(tile_t neighbor, queue_item_t queue_head);
+void insert_existing_queue_element(tile_t *tile, queue_item_t queue_head);
+
+void insert_queue_element_before(queue_item_t *new_element, queue_item_t *next_element);
 
 #endif //P1_PROJECT_MINEFIELD_PATHFINDING_PATHFINDING_H
