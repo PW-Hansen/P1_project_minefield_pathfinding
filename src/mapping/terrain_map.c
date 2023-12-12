@@ -84,7 +84,7 @@ map_t map_from_ppm(const char *file_path) {
     }
 
     pixel_t temp;
-    for (int i = 0; i < width; i++) {
+    for (int i = 0; i < height; i++) {
         terrain_map.data[i] = (int *) calloc(height, sizeof(int));
         if (terrain_map.data[i] == NULL) {
             fprintf(stderr, "Memory allocation failed\n");
@@ -94,7 +94,7 @@ map_t map_from_ppm(const char *file_path) {
             free(terrain_map.data);
             exit(EXIT_FAILURE);
         }
-        for (int j = 0; j < height; j++) {
+        for (int j = 0; j < width; j++) {
             (void) fread(&temp, sizeof(pixel_t), 1, file);
             terrain_map.data[i][j] = get_type_of_pixel(temp);
         }
