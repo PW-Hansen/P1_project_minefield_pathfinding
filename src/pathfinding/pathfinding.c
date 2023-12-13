@@ -40,7 +40,7 @@ double pathfinding_main(double **cost_map, int x_size, int y_size, int x_target,
     double new_g_score;
 
     printf("Allocating neighbors\n");
-    tile_t **neighbors = malloc(sizeof(tile_t *) * 8);
+    tile_t **neighbors[8];
     tile_t *neighbor;
 
     printf("Starting the loop\n");
@@ -120,12 +120,6 @@ double pathfinding_main(double **cost_map, int x_size, int y_size, int x_target,
     printf("Map cleared.\n");
     free_queue(&queue_head);
     printf("Queue cleared.\n");
-
-    for (int i = 0; i < 8; i++) {
-        free(neighbors[i]);
-    }
-    free(neighbors);
-    printf("Neighbors cleared.\n");
     printf("All memory freed.\n");
 
     return total_cost;
