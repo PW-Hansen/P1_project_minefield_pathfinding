@@ -6,6 +6,7 @@
 #include "kernel_density_estimation.h"
 #include "terrain_map.h"
 #include "settings.h"
+#include "evaluation.h"
 
 
 int main() {
@@ -53,6 +54,9 @@ int main() {
 
     free_map(terrain_map);
     printf("Thank you for using our software :)\n");
+
+    // TODO, link this with pathfinding.
+    economic_evaluation(100, 10, 50, 50);
 
     return EXIT_SUCCESS;
 }
