@@ -9,6 +9,6 @@ add_subdirectory(pathfinding)
 add_library(settings INTERFACE settings.h)
 
 add_executable(main main.c)
-target_link_libraries(main combiner terrain_map kernel_density_estimation settings)
+target_link_libraries(main combiner terrain_map kernel_density_estimation pathfinding settings)
 
 install(TARGETS main)

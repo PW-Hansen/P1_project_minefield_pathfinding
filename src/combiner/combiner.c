@@ -8,13 +8,8 @@ int base_cost = 5;
 int mine_cost = 10;
 int size = 64;
 
-void combine_arrays(int **terrain_layout, double **kde_layout) {
-    // Dynamically allocate the cost map
-    double **cost_map = (double **)malloc(size * sizeof(double *));
-    for (int y = 0; y < size; y++) {
-        cost_map[y] = (double *)malloc(size * sizeof(double));
-    }
-
+void combine_arrays(int **terrain_layout, double **kde_layout, double **cost_map) {
+    printf("\n\nCombined map:\n");
     // Fill the cost_map with calculated costs
     for (int x = 0; x < size; x++) {
         for (int y = 0; y < size; y++) { 
@@ -34,6 +29,4 @@ void combine_arrays(int **terrain_layout, double **kde_layout) {
         }
         printf("\n");
     }
-
-    free(cost_map);
 }
