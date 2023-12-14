@@ -151,12 +151,11 @@ void update_f_g_scores(tile_t *tile, double new_g_score) {
 }
 
 void free_queue(queue_item_t *head) {
-    queue_item_t *current = head;
+    queue_item_t *current = head->next_p;
     queue_item_t *next;
 
     while (current != NULL) {
         next = current->next_p;
-        free(current->tile_p);
         free(current);
         current = next;
     }
