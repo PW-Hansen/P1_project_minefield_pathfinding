@@ -7,6 +7,7 @@
 #include "terrain_map.h"
 #include "settings.h"
 #include "pathfinding.h"
+#include "evaluation.h"
 
 
 int main() {
@@ -73,6 +74,9 @@ int main() {
     }
     free(cost_map);
     printf("Thank you for using our software :)\n");
+
+    // TODO, link this with pathfinding.
+    economic_evaluation(100, 10, 50, 50);
 
     return EXIT_SUCCESS;
 }

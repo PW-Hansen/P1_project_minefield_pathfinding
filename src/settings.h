@@ -17,3 +17,9 @@
 #define SETTINGS_TERRAIN_FIELD_COST 3
 #define SETTINGS_TERRAIN_RIVER_COST 8
 #define SETTINGS_TERRAIN_FOREST_COST 7
+
+// Economic valuation
+#define DISCOUNT_RATE 0.95 // Money in the future is worth less than money now.
+#define EXPECTED_GROWTH 1.02 // How much do we expect the economy to grow?
+#define LOOK_FORWARD_YEARS 25 // How long do we look forward when evaluation economic gain?
+#define ROAD_MAINTENANCE_COST 10 // How much a km of road will cost to maintain per year.
