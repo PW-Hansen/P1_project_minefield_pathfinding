@@ -62,11 +62,11 @@ int main() {
     }
     free(kde_map);
 
-    pathfinding_output_t output = pathfinding_main(cost_map, kde_settings.y_size, kde_settings.y_size,
+    pathfinding_output_t pf_output = pathfinding_main(cost_map, kde_settings.y_size, kde_settings.y_size,
                                          TARGET_X, TARGET_Y, START_X, START_Y);
 
-    printf("Total road-building cost: %lf\n", output.cost);
-    printf("Road-building length: %lf\n", output.length);
+    printf("Total road-building cost: %lf\n", pf_output.cost);
+    printf("Road-building length: %lf\n", pf_output.length);
 
     // Frees the memory used for the combined values map.
     for (int y = 0; y < kde_settings.y_size; y++) {
@@ -75,8 +75,7 @@ int main() {
     free(cost_map);
     printf("Thank you for using our software :)\n");
 
-    // TODO, link this with pathfinding.
-    economic_evaluation(100, 10, 50, 50);
+    economic_evaluation(pf_output);
 
     return EXIT_SUCCESS;
 }
