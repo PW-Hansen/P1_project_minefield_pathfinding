@@ -26,7 +26,12 @@ typedef struct {
     int y_target;
 } pathfinding_settings_t;
 
-double pathfinding_main(double **cost_map, int x_size, int y_size, int x_target, int y_target, int x_start, int y_start);
+typedef struct {
+    double cost;
+    double length;
+} pathfinding_output_t;
+
+pathfinding_output_t pathfinding_main(double **cost_map, int x_size, int y_size, int x_target, int y_target, int x_start, int y_start);
 
 void initialize_map(tile_t **pathfinding_map, double **cost_map, pathfinding_settings_t settings);
 

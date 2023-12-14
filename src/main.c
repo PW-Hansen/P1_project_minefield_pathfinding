@@ -61,10 +61,11 @@ int main() {
     }
     free(kde_map);
 
-    double total_cost = pathfinding_main(cost_map, kde_settings.y_size, kde_settings.y_size,
+    pathfinding_output_t output = pathfinding_main(cost_map, kde_settings.y_size, kde_settings.y_size,
                                          TARGET_X, TARGET_Y, START_X, START_Y);
 
-    printf("Total road-building cost: %lf", total_cost);
+    printf("Total road-building cost: %lf\n", output.cost);
+    printf("Road-building length: %lf\n", output.length);
 
     // Frees the memory used for the combined values map.
     for (int y = 0; y < kde_settings.y_size; y++) {

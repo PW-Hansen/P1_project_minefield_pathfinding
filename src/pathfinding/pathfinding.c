@@ -7,7 +7,7 @@
 #define G_INF 1000000 // Value exceeding any number g should ever reach.
 
 
-double pathfinding_main(double **cost_map, int x_size, int y_size, int x_target, int y_target, int x_start, int y_start) {
+pathfinding_output_t pathfinding_main(double **cost_map, int x_size, int y_size, int x_target, int y_target, int x_start, int y_start) {
     // Creating a 2D array for the value of the KDE values.
     // TODO, need to verify that memory has been allocated.
     printf("Creating pathfinding map\n");
@@ -103,9 +103,11 @@ double pathfinding_main(double **cost_map, int x_size, int y_size, int x_target,
     tile_t tile = target_tile;
     tile_t* source_p = tile.source_p;
 
+    double length_tiles;
     // Print out the path found.
     while ( source_p != NULL ) {
         printf("%d, %d\n", source_p->x, source_p->y);
+        length_tiles += sqrt(pow(tile.y-source_p->y, 2)+ pow(tile.x-source_p->x, 2));
         tile = *source_p;
         source_p = tile.source_p;
     }
@@ -122,7 +124,11 @@ double pathfinding_main(double **cost_map, int x_size, int y_size, int x_target,
     printf("Queue cleared.\n");
     printf("All memory freed.\n");
 
-    return total_cost;
+    pathfinding_output_t output;
+    output.cost = total_cost;
+    output.length = length_tiles;
+
+    return output;
 }
 
 void initialize_map(tile_t **pathfinding_map, double **cost_map, pathfinding_settings_t settings) {
