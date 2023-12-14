@@ -103,7 +103,7 @@ pathfinding_output_t pathfinding_main(double **cost_map, int x_size, int y_size,
     tile_t tile = target_tile;
     tile_t* source_p = tile.source_p;
 
-    double length_tiles;
+    double length_tiles = 0;
     // Print out the path found.
     while ( source_p != NULL ) {
         printf("%d, %d\n", source_p->x, source_p->y);
