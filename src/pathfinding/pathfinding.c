@@ -236,7 +236,6 @@ int insert_queue_element(tile_t *tile, queue_item_t queue_head) {
      * f_score of the neighbor. If so, move queue element one down in the queue.
      */
     while (queue_element->tile_p->f_score < tile->f_score) {
-        queue_element = queue_element->next_p;
         /* Now look at the next pointer of the queue element. If this pointer
          * is the null pointer, it means that the queue element is the final
          * element in the queue, and so the inserted element should simply
@@ -249,6 +248,8 @@ int insert_queue_element(tile_t *tile, queue_item_t queue_head) {
             element_insert->prev_p = queue_element;
             element_insert->next_p = NULL;
             return (0);
+        } else {
+            queue_element = queue_element->next_p;
         }
     }
     /* If queue_element is the first element in the queue which is
