@@ -1,4 +1,5 @@
 add_executable(test_function test_function.c)
 target_link_libraries(test_function mtest)
+target_link_libraries(test_function combiner terrain_map kernel_density_estimation pathfinding evaluation settings)
 
 discover_tests(test_function)
