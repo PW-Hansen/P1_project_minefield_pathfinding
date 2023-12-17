@@ -127,7 +127,7 @@ void print_kde_map(kde_settings_t settings, double **kde_map) {
     printf("KDE map:\n");
     for (int x = 0; x < settings.x_size; x++) {
         for (int y = 0; y < settings.y_size; y++) {
-            printf("%1.0lf", kde_map[x][y]);
+            printf("%.1lf ", kde_map[x][y]);
         }
         printf("\n");
     }
