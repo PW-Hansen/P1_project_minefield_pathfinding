@@ -33,8 +33,8 @@ int main() {
     }
 
     // Initializing an array for the hotspots. Length is set at the max possible value.
+    hotspot_tuple_t hotspot_pos[terrain_map.width * terrain_map.height];
     int hotspot_num = hotspot_pos_from_ppm(file_hotspot_path, hotspot_pos);
-    hotspot_tuple_t hotspot_pos[hotspot_num];
 
     kde_settings_t kde_settings = {terrain_map.width, terrain_map.height, 1, hotspot_num, 0};
 
