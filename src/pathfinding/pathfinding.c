@@ -207,6 +207,7 @@ int insert_queue_element(tile_t *tile, queue_item_t queue_head) {
         element_insert->tile_p = tile;
         element_insert->next_p = NULL;
         element_insert->prev_p = NULL;
+        tile->queue_p = element_insert;
     } else {
         element_insert = tile->queue_p;
     }
