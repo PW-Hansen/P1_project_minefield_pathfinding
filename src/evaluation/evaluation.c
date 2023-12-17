@@ -29,7 +29,7 @@ double compute_yearly_gain() {
     scanf(" %lf", &city_1_gdp);
     printf("What is the GDP of city 2?\n> ");
     scanf(" %lf", &city_2_gdp);
-    return city_1_gdp * city_2_gdp * GDP_SCALE_FACTOR;
+    return (city_1_gdp + city_2_gdp) * GDP_SCALE_FACTOR;
 }
 
 /**
