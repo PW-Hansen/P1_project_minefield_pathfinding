@@ -36,7 +36,7 @@ int main() {
     hotspot_tuple_t hotspot_pos[terrain_map.width * terrain_map.height];
     int hotspot_num = hotspot_pos_from_ppm(file_hotspot_path, hotspot_pos);
 
-    kde_settings_t kde_settings = {terrain_map.width, terrain_map.height, 1, hotspot_num, 0};
+    kde_settings_t kde_settings = {terrain_map.width, terrain_map.height, 1, hotspot_num};
 
     // Creating a 2D array for the value of the KDE values.
     double **kde_map = malloc(sizeof(double *) * kde_settings.x_size);

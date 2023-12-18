@@ -10,7 +10,6 @@ typedef struct {
     int y_size;
     int bandwidth;
     int n;
-    int testing;
 } kde_settings_t;
 
 typedef struct {

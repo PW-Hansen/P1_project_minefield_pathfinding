@@ -12,7 +12,7 @@ TEST_CASE(kernel_density_estimation, {
     hotspot_pos[2].x_pos = 1; hotspot_pos[2].y_pos = 3;
 
 
-    kde_settings_t kde_settings = {5, 5, 1, 3, 0};
+    kde_settings_t kde_settings = {5, 5, 1, 3};
 
     // Creating a 2D array for the value of the KDE values.
     double **kde_map = malloc(sizeof(double *) * kde_settings.x_size);
