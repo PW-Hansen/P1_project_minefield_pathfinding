@@ -1,10 +1,6 @@
 // Tile
 #define SETTINGS_TILE_COST 5
 
-// Grid dimensions
-#define GRID_SIZE_X 64
-#define GRID_SIZE_Y 64
-
 // Landmine
 #define SETTINGS_LANDMINE_COST 69
 #define SETTINGS_LANDMINE_BANDWIDTH 1
