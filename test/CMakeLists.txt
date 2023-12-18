@@ -1,5 +1,12 @@
+# TODO: Split out
 add_executable(test_function test_function.c)
-target_link_libraries(test_function mtest)
-target_link_libraries(test_function combiner terrain_map kernel_density_estimation pathfinding evaluation settings)
-
+target_link_libraries(test_function mtest combiner terrain_map evaluation)
 discover_tests(test_function)
+
+add_executable(test_pathfinding test_pathfinding.c)
+target_link_libraries(test_pathfinding mtest pathfinding)
+discover_tests(test_pathfinding)
+
+add_executable(test_kernel_density_estimation test_kernel_density_estimation.c)
+target_link_libraries(test_kernel_density_estimation mtest kernel_density_estimation)
+discover_tests(test_kernel_density_estimation)
