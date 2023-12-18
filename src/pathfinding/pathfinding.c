@@ -199,7 +199,6 @@ int populate_neighbors(tile_t current_tile, tile_t **neighbors, tile_t **pathfin
 }
 
 int insert_queue_element(tile_t *tile, queue_item_t queue_head) {
-
     queue_item_t *element_insert;
     // Creating a queue element, if the tile does not already have one.
     if (tile->queue_p == NULL) {
@@ -268,14 +267,18 @@ void insert_existing_queue_element(tile_t *tile, queue_item_t queue_head) {
 
     queue_item_t *current_element, *prev_element, *next_element;
     current_element = tile->queue_p;
-    prev_element = current_element->prev_p;
-    next_element = current_element->next_p;
+    if (current_element != NULL) {
+        prev_element = current_element->prev_p;
+        next_element = current_element->next_p;
 
-    prev_element->next_p = next_element;
-    next_element->prev_p = prev_element;
+        prev_element->next_p = next_element;
+        if (next_element != NULL) {
+            next_element->prev_p = prev_element;
+        }
 
-    current_element->prev_p = NULL;
-    current_element->next_p = NULL;
+        current_element->prev_p = NULL;
+        current_element->next_p = NULL;
+    }
 
     // Then, call insert_queue_element.
     insert_queue_element(tile, queue_head);
