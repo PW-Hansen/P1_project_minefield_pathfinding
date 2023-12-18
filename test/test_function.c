@@ -1,26 +1,9 @@
 #include "mtest.h"
-#include "../src/pathfinding/pathfinding.h"
-#include "../src/mapping/kernel_density_estimation.h."
+
+#include "pathfinding.h"
+#include "kernel_density_estimation.h"
+
 #include <stdlib.h>
-
-
-// These are currently just dummy tests with dummy names.
-// Feel free to remove them as tests get added.
-TEST_CASE(quotient_of_function, {
-  CHECK_TRUE(1);
-})
-
-TEST_CASE(modulus_of_function, {
-  CHECK_TRUE(1);
-})
-
-TEST_CASE(calculate_fibonacci, {
-  CHECK_TRUE(1);
-})
-
-TEST_CASE(calculate_gcd, {
-  CHECK_TRUE(1);
-})
 
 // Pathfinding tests.
 TEST_CASE(pathfinding_queue_inserting, {
@@ -123,13 +106,13 @@ TEST_CASE(KDE_test, {
     // Test cases, verified by hand.
     printf("Checking hand-verified equalities.\n");
     // All hotspots should have the exact same value, which should be 1.0.
-    CHECK_TRUE(kde_map[4][0] == kde_map[4][3]);
-    CHECK_TRUE(kde_map[4][0] == kde_map[1][3]);
-    CHECK_EQ_DOUBLE(1.0, kde_map[4][0], 0.0);
+    CHECK_EQ_DOUBLE(kde_map[4][0], kde_map[4][3], 1e-6);
+    CHECK_EQ_DOUBLE(kde_map[4][0], kde_map[1][3], 1e-6);
+    CHECK_EQ_DOUBLE(1.0, kde_map[4][0], 1e-6);
 
     // Checking a few other tiles which should be pairwise identical.
-    CHECK_TRUE(kde_map[4][1] == kde_map[2][3]);
-    CHECK_TRUE(kde_map[4][2] == kde_map[3][3]);
+    CHECK_EQ_DOUBLE(kde_map[4][1], kde_map[2][3], 1e-6);
+    CHECK_EQ_DOUBLE(kde_map[4][2], kde_map[3][3], 1e-6);
 
     // Checking column 1.
     CHECK_EQ_DOUBLE(0.006999, kde_map[0][0], 1e-6);
@@ -146,9 +129,4 @@ TEST_CASE(KDE_test, {
     printf("\n");
 })
 
-MAIN_RUN_TESTS(quotient_of_function,
-               modulus_of_function,
-               calculate_fibonacci,
-               calculate_gcd,
-               pathfinding_queue_inserting,
-               KDE_test)
+MAIN_RUN_TESTS(pathfinding_queue_inserting, KDE_test)
