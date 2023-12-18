@@ -23,25 +23,6 @@ int kde_main(double **kde_map, kde_settings_t settings, hotspot_tuple_t *hotspot
 
     print_kde_map(settings, kde_map);
 
-    // If testing is enabled, write out the KDE map to a file, then compare it to pre-computed test file.
-    if (settings.testing == 1) {
-        FILE *fp = fopen("test/test_files/output.txt", "w");
-        if (fp == NULL) {
-            printf("Could not write to file.");
-            exit(EXIT_FAILURE);
-        }
-        kde_output(fp, settings, kde_map);
-        fclose(fp);
-
-        FILE *fp_test = fopen("test/test_files/kde_test_1.txt", "r");
-        FILE *fp_comp = fopen("test/test_files/output.txt", "r");
-
-        kde_test(fp_test, fp_comp);
-
-        fclose(fp_test);
-        fclose(fp_comp);
-    }
-
     return (0);
 }
 
@@ -170,30 +151,4 @@ void kde_output(FILE *fp, kde_settings_t settings, double **kde_map) {
         }
         fprintf(fp, "\n");
     }
-}
-
-/**
- * Test to check whether two files are identical. Used to verify the output of the KDE function
- * against a precomputed result for a specific setting.
- * @param test_file
- * @param compare_file
- */
-void kde_test(FILE *test_file, FILE *compare_file) {
-    int test_c, comp_c;
-
-    do {
-        test_c = fgetc(test_file);
-        comp_c = fgetc(compare_file);
-
-        if (test_c != comp_c) {
-            printf("Files are not identical.\n");
-            exit(EXIT_FAILURE);
-        }
-
-        if (feof(test_file)) {
-            break;
-        }
-
-    } while (test_c == comp_c);
-    printf("The two files are identical.");
 }
