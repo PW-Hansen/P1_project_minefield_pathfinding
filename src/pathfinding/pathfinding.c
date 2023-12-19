@@ -16,10 +16,20 @@ pathfinding_output_t pathfinding_main(double **cost_map, int x_size, int y_size,
         pathfinding_map[y] = malloc(sizeof(tile_t) * y_size);
     }
 
+    double min_val = INFINITY;
+
+    for (int x = 0; x < x_size; x++) {
+        for (int y = 0; y < y_size; y++) {
+            if (cost_map[x][y] < min_val) {
+                min_val = cost_map[x][y];
+            }
+        }
+    }
+
     printf("Initializing settings and map\n");
     // Setting up settings and initializing the map.
     pathfinding_settings_t settings = {x_size, y_size, x_target, y_target};
-    initialize_map(pathfinding_map, cost_map, settings);
+    initialize_map(pathfinding_map, cost_map, settings, min_val);
 
     // Assigning g- and f_scores to the starting tile.
     update_f_g_scores(&pathfinding_map[x_start][y_start], 0);
@@ -35,6 +45,7 @@ pathfinding_output_t pathfinding_main(double **cost_map, int x_size, int y_size,
     queue_head.next_p = start_element;
     start_element->prev_p = &queue_head;
 
+    int nodes_visited = 0;
     int num_neighbors;
     int adjacency_status;
     double new_g_score;
@@ -45,13 +56,13 @@ pathfinding_output_t pathfinding_main(double **cost_map, int x_size, int y_size,
 
     printf("Starting the loop\n");
     // Going through the queue so long as the head of the queue is not the target tile.
-    while (queue_head.next_p->tile_p->h_score != 0) {
-
+    while (queue_head.next_p->tile_p->x != x_target || queue_head.next_p->tile_p->y != y_target) {
 
         tile_t current_tile = *(queue_head.next_p->tile_p);
 
-        printf("Current tile: (%d, %d), (g, h): (%lf, %lf)\n",
+        /*printf("Current tile: (%d, %d), (g, h): (%lf, %lf)\n",
                current_tile.x, current_tile.y, current_tile.g_score, current_tile.h_score);
+        */
 
         num_neighbors = populate_neighbors(current_tile, neighbors, pathfinding_map, settings);
 
@@ -96,6 +107,9 @@ pathfinding_output_t pathfinding_main(double **cost_map, int x_size, int y_size,
         queue_head.next_p = queue_head.next_p->next_p;
         free(queue_head.next_p->prev_p);
         queue_head.next_p->prev_p = NULL;
+
+        // Incrementing number of nodes visited. Used to experiment with heuristic.
+        nodes_visited++;
     }
 
     tile_t target_tile = *(queue_head.next_p->tile_p);
@@ -114,6 +128,7 @@ pathfinding_output_t pathfinding_main(double **cost_map, int x_size, int y_size,
 
     double total_cost = target_tile.g_score;
 
+    printf("The pathfinding algorithm visited %d tiles.\n", nodes_visited);
     printf("Total cost: %lf\n", total_cost);
 
     // Freeing allocated memory.
@@ -131,7 +146,8 @@ pathfinding_output_t pathfinding_main(double **cost_map, int x_size, int y_size,
     return output;
 }
 
-void initialize_map(tile_t **pathfinding_map, double **cost_map, pathfinding_settings_t settings) {
+void initialize_map(tile_t **pathfinding_map, double **cost_map,
+                    pathfinding_settings_t settings, double min_val) {
     for (int x = 0; x < settings.x_size; x++) {
         for (int y = 0; y < settings.y_size; y++) {
             tile_t tile;
@@ -140,7 +156,7 @@ void initialize_map(tile_t **pathfinding_map, double **cost_map, pathfinding_set
             tile.cost = cost_map[x][y];
 
             // Using taxi cab distance as h_score.
-            tile.h_score = 10.0 * (abs(settings.x_target - x) + abs(settings.y_target - y));
+            tile.h_score = min_val * (abs(settings.x_target - x) + abs(settings.y_target - y));
             tile.g_score = G_INF; // Meaning uninitialized.
             tile.f_score = G_INF;
             tile.source_p = NULL;

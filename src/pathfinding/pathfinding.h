@@ -33,7 +33,8 @@ typedef struct {
 
 pathfinding_output_t pathfinding_main(double **cost_map, int x_size, int y_size, int x_target, int y_target, int x_start, int y_start);
 
-void initialize_map(tile_t **pathfinding_map, double **cost_map, pathfinding_settings_t settings);
+void initialize_map(tile_t **pathfinding_map, double **cost_map,
+                    pathfinding_settings_t settings, double min_val);
 
 void update_f_g_scores(tile_t *tile, double new_g_score);
 
