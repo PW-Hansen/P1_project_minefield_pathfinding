@@ -47,7 +47,7 @@ map_t map_from_ppm(const char *file_path) {
     char header[3];
     (void) fgets(header, sizeof(header), file);
 
-    // TODO: Support more than just the P6 PPM.
+
     if (header[0] != 'P' || header[1] != '6') {
         fprintf(stderr, "File does not have the correct magic bytes.\n");
         fclose(file);
@@ -117,7 +117,7 @@ int hotspot_pos_from_ppm(const char *file_path, hotspot_tuple_t* hotspot_pos) {
     char header[3];
     (void) fgets(header, sizeof(header), file);
 
-    // TODO: Support more than just the P6 PPM.
+
     if (header[0] != 'P' || header[1] != '6') {
         fprintf(stderr, "File does not have the correct magic bytes.\n");
         fclose(file);

@@ -60,9 +60,7 @@ pathfinding_output_t pathfinding_main(double **cost_map, int x_size, int y_size,
 
         tile_t current_tile = *(queue_head.next_p->tile_p);
 
-        /*printf("Current tile: (%d, %d), (g, h): (%lf, %lf)\n",
-               current_tile.x, current_tile.y, current_tile.g_score, current_tile.h_score);
-        */
+
 
         num_neighbors = populate_neighbors(current_tile, neighbors, pathfinding_map, settings);
 
@@ -100,7 +98,7 @@ pathfinding_output_t pathfinding_main(double **cost_map, int x_size, int y_size,
                 insert_existing_queue_element(&pathfinding_map[neighbor->x][neighbor->y], queue_head);
             }
         }
-        // printf("Deleting the current queue element from the queue, making the second queue element the first\n");
+
         /* Once an item has been processed, remove it from the queue,
          * freeing the memory and removing pointers to it. */
         queue_head.next_p->tile_p->queue_p = NULL;
