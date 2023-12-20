@@ -33,6 +33,7 @@
           '';
           doCheck = true;
           env.NIX_CFLAGS_COMPILE = "-O0 -Wall -Wextra -Wpedantic";
+          meta.mainProgram = "main";
         }) {};
     });
 }
