@@ -17,9 +17,9 @@ int main() {
 
     char file_path[1024];
     char file_hotspot_path[1024];
-    printf("Enter file path: ");
+    printf("Enter map file path: ");
     (void) scanf(" %s", file_path);
-    printf("Enter file path: ");
+    printf("Enter hotspot file path: ");
     (void) scanf(" %s", file_hotspot_path);
 
     map_t terrain_map = map_from_ppm(file_path);

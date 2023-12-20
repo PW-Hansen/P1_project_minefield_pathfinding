@@ -2,10 +2,22 @@
 
 To clone: `git clone --recurse-submodules git@github.com:PW-Hansen/P1_project_minefield_pathfinding.git`
 
-### HOWTO Contribute.
+### HOWTO Run
 
-This is still WIP.
+To run the example map, input the following:
+```
+static/testmap.ppm
+static/hotspot_map.ppm
+```
 
-1. Use `_alloc` suffix for functions that return a `malloc` or `calloc` pointer.
+Then you can input the following, which should advice that you do not make a new road.
+```
+GDP City 1: 50
+GDP City 2: 100
+```
 
-2. When using an `_alloc` function, always put a `free` right below it. Only move this `free` down as needed, dont put it at the bottom.
+Alternatively, you can input this instead, which should advice to make a new road.
+```
+GDP City 1: 50
+GDP City 2: 500
+```

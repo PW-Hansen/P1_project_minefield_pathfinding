@@ -32,7 +32,7 @@
             ln -s ${mtest} extern/mtest
           '';
           doCheck = true;
-          env.NIX_CFLAGS_COMPILE = "-Wall -Wextra -Wpedantic";
+          env.NIX_CFLAGS_COMPILE = "-O0 -Wall -Wextra -Wpedantic";
         }) {};
     });
 }
