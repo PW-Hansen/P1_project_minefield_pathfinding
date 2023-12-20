@@ -37,13 +37,17 @@ static/testmap.ppm
 static/hotspot_map.ppm
 ```
 
-Then you can input the following, which should advice that you do not make a new road.
+The project goal will be to determine the cheapest path possible between two cities for road-building purposes, including mineclearing costs if any minefields are present along the chepest path.
+
+Note, the values below assume the settings as included in the project originally (`src/settings.h`). Modified settings may give different results.
+
+If you input the following, you should be advised that you do not go ahead with the project.
 ```
 GDP City 1: 50
 GDP City 2: 100
 ```
 
-Alternatively, you can input this instead, which should advice to make a new road.
+Alternatively, you can input this instead, which should now advice to do the project, as described by the pathfinding algorithm.
 ```
 GDP City 1: 50
 GDP City 2: 500
